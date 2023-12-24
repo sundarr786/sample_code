@@ -40,6 +40,51 @@ void delete(int id)
 	return;
 }
 
+void search_by_id(int id)
+{
+	st *l_ptr = NULL;
+	int count = 0;
+
+	l_ptr = rec;
+	
+	while (l_ptr!=NULL)	{
+		count++;
+		printf("count:%d\n",count);
+		if (l_ptr->id == id)	{
+			printf("id:%d found at position:%d\n",id,count);
+			break;
+		}
+		l_ptr = l_ptr->next;
+		if (l_ptr == NULL)	{
+			printf("id:%d is not in list\n",id);
+		}
+	}
+	
+	return;
+}
+
+void count_and_print()
+{
+	st *l_ptr = NULL;
+	int count = 0;
+
+	if (rec == NULL)	{
+		printf("0 elements in list\n");
+		return;
+	}
+	else	{
+		l_ptr = rec;
+		
+		while (l_ptr!=NULL)	{
+			count++;
+			l_ptr = l_ptr->next;
+		}
+		printf("Total number of nodes:%d\n",count);
+	}
+	return;
+}
+
+
 void print()
 {
 	st *ptr = NULL;
@@ -109,24 +154,32 @@ int main()
 {
 	int id = 0;
 	int num = 0;
+	atexit(clear);
 	while	(1)	{
 
-		printf("enter 1 : add in begining\n2 : add in end\n3 : delete\n4 : print\n");
+		printf("enter your choice:\n1 : add in begining\n2 : add in end\n3 : search by id\n4 : count\n");
+		printf("5 : delete by id\n6 : print\n9 : print,clear and exit\n**********\n");
 		scanf(" %d",&num);
 		if	(num == 1)
 			add_begin();
 		else if (num == 2)
 			add_end();
 		else if (num == 3)	{
+			printf("enter id to search\n");
+			scanf(" %d",&id);
+			search_by_id(id);
+		}
+		else if (num == 4)
+			count_and_print();
+		else if (num == 5)	{
 			printf("enter id to delete\n");
 			scanf(" %d",&id);
 			delete(id);
 		}
-		else if (num == 4)
+		else if (num == 6)
 			print();
 		else if (num == 9) {
 			print();
-			printf("exiting ch:%c\n",ch);
 			clear();
 			break;
 		}
