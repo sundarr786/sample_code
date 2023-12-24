@@ -12,6 +12,25 @@ typedef struct student_rec {
 
 st *rec = NULL;
 
+/* 
+finding last node logic:
+------------------------
+	ptr = rec;
+	while (ptr->next !=NULL)	{
+		ptr = ptr->next;	
+	}
+*/
+
+/*
+find  second last node:
+----------------------
+
+ptr = rec;
+while (ptr->next->next!=NULL)	{
+	ptr = ptr->next;
+}
+*/
+
 void reverse_node()
 {
 	st *ptr = NULL;
@@ -205,7 +224,6 @@ int main()
 		else if (num == 8)	{
 			reverse_node();
 		}
-	
 		else if (num == 9) {
 			print();
 			clear();
