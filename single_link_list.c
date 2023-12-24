@@ -12,6 +12,25 @@ typedef struct student_rec {
 
 st *rec = NULL;
 
+void reverse_node()
+{
+	st *ptr = NULL;
+	st *prev = NULL;	
+	st *next = NULL;	
+	ptr = rec;
+	
+	while (ptr != NULL)	{
+		next = ptr->next;
+		ptr->next = prev;
+		prev = ptr;
+		ptr = next;
+	}	
+	rec = prev;
+
+	return;
+}
+
+
 void delete(int id)
 {
 	st *ptr = rec;
@@ -127,8 +146,8 @@ void add_end()
 		while (ptr->next != NULL)
 			ptr = ptr->next;
 
-		l_rec->next = NULL;
 		ptr->next = l_rec;
+		l_rec->next = NULL;
 	}
 	return;
 }
@@ -144,6 +163,8 @@ void add_begin()
 	scanf("%d",&l_rec->id);
 	printf("enter name to add\n");
 	scanf("%s",l_rec->name);
+	
+	//below order is important
 	l_rec->next = rec; // for first entry rec will be null
 	rec = l_rec;
 
@@ -178,6 +199,13 @@ int main()
 		}
 		else if (num == 6)
 			print();
+		else if (num == 7)	{
+			//add in middle
+		}
+		else if (num == 8)	{
+			reverse_node();
+		}
+	
 		else if (num == 9) {
 			print();
 			clear();
