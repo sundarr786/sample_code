@@ -14,6 +14,66 @@ typedef struct student {
 
 st *head = NULL;
 
+void delete(int id)
+{
+	st *ptr = NULL;
+	st *temp = NULL;
+	st *l_prev = NULL;
+	ptr = head;
+
+	if (ptr == NULL)	{
+		printf("no data available\n");
+		return;
+	}
+
+	while (ptr != NULL)	{
+		if (ptr->id == id)	{
+			if (ptr == head)	{
+				temp = ptr->next;
+				if (temp != NULL)
+					temp->prev = NULL;
+				head = temp;
+				free(ptr);
+				return;
+			}
+			else if (ptr->next == NULL)	{
+				temp  = ptr->prev;
+				temp->next = NULL;
+				free(ptr);
+			}
+			else {
+				l_prev = ptr->prev;
+		//		l_next = ptr->next;
+				l_prev->next = ptr->next;
+				l_prev->next->prev = l_prev;
+				free(ptr);
+			}
+
+			
+		}
+		ptr = ptr->next;
+	}
+	return;
+}
+void clear()
+{
+	st *ptr = NULL;
+	st *temp = NULL;
+	
+	if (head == NULL)	{
+		printf("no data available\n");
+		return;
+	}
+	
+	ptr = head;
+	while (ptr != NULL)	{
+		temp = ptr->next;
+		free(ptr);
+		ptr= temp;
+
+	}
+	return;
+}
 void print()
 {
 	st *ptr = NULL;
@@ -56,10 +116,42 @@ void add_begin()
 	return;
 }
 
+void add_end()
+{
+	st *ptr = NULL;
+	st *l_ptr = NULL;
+	if ((ptr = (st*)malloc(sizeof(st)))==NULL)	{
+		printf("unable to allocate memory\n");
+		return;
+	}
+	printf("Enter student id\n");
+	scanf("%d",&ptr->id);
+	printf("Enter name:\n");
+	scanf("%s",ptr->name);
+
+	
+	if (head == NULL)	{
+		ptr->prev = NULL;
+		ptr->next = NULL;
+		head = ptr;
+	}
+	else	{
+		l_ptr = head;
+		while (l_ptr->next != NULL)	{
+			l_ptr = l_ptr->next;
+		}
+		l_ptr->next = ptr;
+		ptr->prev = l_ptr;
+		ptr->next = NULL;
+	}
+	
+	return;
+}
+
 int main()
 {
 	int token = 0;
-	char ch;
+	int id = 0;
 	while (1)	{
 		printf("enter option\n");
 		scanf("%d",&token);
@@ -71,17 +163,20 @@ int main()
 		else if (token == 2)	{
 			print();
 		}
+		else if (token == 3)	{
+			//add after end node
+			add_end();
+		}
+		else if (token == 4)	{
+			printf("enter id to delete\n");
+			scanf("%d",&id);
+			delete(id);
+		}
 		else if (token == 9)	{
 			print();
-		//	clear();
-		}
-		printf("do you want to continue\n");
-		
-		fflush(stdin);
-		scanf("%c",&ch);
-		if (ch == 'n')
+			clear();
 			break;
-		
+		}
 	}
 	return 0;
 }
