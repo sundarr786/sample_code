@@ -14,6 +14,43 @@ typedef struct student {
 
 st *head = NULL;
 
+void clear()
+{
+	st *ptr = NULL;
+	st *temp = NULL;
+	int count = 0;
+
+	if (head == NULL)	{
+		printf("no data available\n");
+		return;
+	}
+
+	ptr = head->next;
+	
+	do {	
+		if (ptr->next != ptr)	{
+		ptr = ptr->next;
+		temp = ptr->next;
+		printf("clear--->addr:%p\n",ptr);
+		free(ptr);
+		count++;		
+		ptr = temp;
+		}
+	}while (ptr!=head->next);
+		if (head->next == ptr)	{
+		printf("clear--->addr:%p\n",ptr);
+			ptr->next = ptr;
+			free(ptr);
+		count++;		
+		}
+	head = NULL;	
+
+	
+	printf("cleared node_count:%d",count);
+	return;
+}
+
+
 void print()
 {
 	st *ptr = NULL;
@@ -52,6 +89,7 @@ void add_begin()
 		head->next = ptr;
 
 	}
+	printf("add--->addr:%p\n",ptr);
 	return;
 }
 
@@ -64,11 +102,13 @@ int main()
 		scanf("%d",&token);
 		if (token == 1)	{
 			add_begin();
+		}
+		else if (token == 2)	{
+			print();
 		}	
 		else if (token == 9)	{
 			print();
-			//	clear();
-			break;
+			clear();
 		}
 	}
 	return 0;
