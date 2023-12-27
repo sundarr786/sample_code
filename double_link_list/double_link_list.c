@@ -14,6 +14,34 @@ typedef struct student {
 
 st *head = NULL;
 
+void reverse_node()
+{
+	st *p1 = NULL;
+	st *p2 = NULL;
+
+	if (head == NULL || head->next == NULL) {
+		printf("not valid data operated");
+		return;
+	}
+	
+	p1 = head;
+	p2 = head->next;
+
+	p1->next = NULL;
+	p1->prev = p2;
+
+	while (p2 != NULL)	{
+		p2->prev = p2->next;
+		p2->next = p1;
+		p1 = p2;
+		p2  = p2->prev;
+	}
+	head = p1;
+	return;
+}
+
+
+
 void delete(int id)
 {
 	st *ptr = NULL;
@@ -171,6 +199,9 @@ int main()
 			printf("enter id to delete\n");
 			scanf("%d",&id);
 			delete(id);
+		}
+		else if (token == 5)	{
+			reverse_node();
 		}
 		else if (token == 9)	{
 			print();
