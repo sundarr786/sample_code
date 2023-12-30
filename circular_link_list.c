@@ -14,6 +14,45 @@ typedef struct student {
 
 st *head = NULL;
 
+void delete_by_id(int id)
+{
+	st *ptr = NULL;
+	
+	if (head == NULL)	{
+		printf("no data in list,unable to delete\n");
+		return;
+	}	
+	
+	ptr = head->next;
+
+	do {
+
+		if (ptr->id == id)	{
+			if (ptr == head->next)
+				head->next = ptr->next;
+			else if ( head == ptr)	{
+				bfr->next = ptr->next;
+				head = bfr;
+			}
+			else {
+				tmp = ptr->next;
+				bfr->next = tmp;
+			}
+
+			free(ptr);
+		}
+		bfr = ptr;	
+		ptr = temp->next;
+	}while(ptr!=head->next);
+
+
+	
+	
+	
+
+	return;
+}
+
 void clear()
 {
 	st *ptr = NULL;
@@ -128,6 +167,7 @@ void add_begin()
 int main()
 {
 	int token = 0;
+	int delete_id = 0;
 	while (1)	{
 		printf("enter the option\n");
 		scanf("%d",&token);
@@ -140,6 +180,11 @@ int main()
 		else if (token == 3)	{
 			add_end();
 		}	
+	/*	else if (token == 4)	{
+		printf("enter id to be deleted:\n");
+		scanf("%d",&delete_id);	
+			delete_by_id(delete_id);
+		}	*/
 		else if (token == 9)	{
 			print();
 			clear();
