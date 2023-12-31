@@ -17,6 +17,8 @@ st *head = NULL;
 void delete_by_id(int id)
 {
 	st *ptr = NULL;
+	st *bfr = NULL;
+	st *tmp = NULL;
 	
 	if (head == NULL)	{
 		printf("no data in list,unable to delete\n");
@@ -28,11 +30,19 @@ void delete_by_id(int id)
 	do {
 
 		if (ptr->id == id)	{
-			if (ptr == head->next)
+			if (ptr == head->next) {
 				head->next = ptr->next;
+				if (ptr->next == head->next)
+					head = NULL;
+				
+				
+			}
 			else if ( head == ptr)	{
+					
 				bfr->next = ptr->next;
 				head = bfr;
+				if (ptr == bfr)
+					head = NULL;
 			}
 			else {
 				tmp = ptr->next;
@@ -40,15 +50,11 @@ void delete_by_id(int id)
 			}
 
 			free(ptr);
+			break;
 		}
 		bfr = ptr;	
-		ptr = temp->next;
+		ptr = ptr->next;
 	}while(ptr!=head->next);
-
-
-	
-	
-	
 
 	return;
 }
@@ -180,11 +186,11 @@ int main()
 		else if (token == 3)	{
 			add_end();
 		}	
-	/*	else if (token == 4)	{
+		else if (token == 4)	{
 		printf("enter id to be deleted:\n");
 		scanf("%d",&delete_id);	
 			delete_by_id(delete_id);
-		}	*/
+		}	
 		else if (token == 9)	{
 			print();
 			clear();
