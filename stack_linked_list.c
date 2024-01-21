@@ -1,7 +1,7 @@
 /*
 practise: stack implementation using linked list
 The new node is added at begging of node, while pop it will delete begining of node.
-*/
+fe*/
 
 #include <stdio.h>
 #include <stdlib.h>
