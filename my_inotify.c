@@ -14,6 +14,19 @@
 
 #define BUF_LEN 64
 
+int fd = -1;
+int g_ffd = -1;
+
+void cleanup(void)
+{
+
+	inotify_rm_watch(fd, g_ffd);
+	if (g_ffd!=-1 && g_ffd)
+		close(g_ffd);
+	if (fd!=-1 && fd)
+		close(fd);
+}
+
 void display_event(struct inotify_event *event)
 {
 	if (event->mask & IN_MODIFY)
@@ -36,7 +49,6 @@ void display_event(struct inotify_event *event)
 
 int main()
 {
-	int fd = -1;
 	char *ptr = NULL;
 	char buf[BUF_LEN] __attribute__ ((aligned(8)));
 	int numread = 0;
@@ -47,12 +59,14 @@ int main()
 		return -1;
 	}
 
-	if (inotify_add_watch(fd, "/tmp/test", IN_ALL_EVENTS)<0) {
+	if ((g_ffd = inotify_add_watch(fd, "/tmp/test", IN_ALL_EVENTS))<0) {
 		printf("inotify add watch failed\n");
 		close(fd);
 		return -1;
 	}
 
+	atexit(cleanup);
+	
 	while (1) {
 		numread = read(fd, buf, BUF_LEN);
 		if (numread < 0) {
@@ -66,6 +80,9 @@ int main()
 		}
 	}
 
-
+	if (fd)	{
+		close(fd);
+		fd = 0;
+	}
 	return 0;
 }
