@@ -84,5 +84,9 @@ int main()
 		close(fd);
 		fd = 0;
 	}
+	if (g_ffd)	{
+		close(g_ffd);
+		g_ffd = 0;
+	}
 	return 0;
 }
