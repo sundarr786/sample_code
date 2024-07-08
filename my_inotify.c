@@ -21,8 +21,6 @@ void cleanup(void)
 {
 
 	inotify_rm_watch(fd, g_ffd);
-	if (g_ffd!=-1 && g_ffd)
-		close(g_ffd);
 	if (fd!=-1 && fd)
 		close(fd);
 }
@@ -83,10 +81,6 @@ int main()
 	if (fd)	{
 		close(fd);
 		fd = 0;
-	}
-	if (g_ffd)	{
-		close(g_ffd);
-		g_ffd = 0;
 	}
 	return 0;
 }
