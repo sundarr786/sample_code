@@ -1,2 +1,2 @@
-# sample_code
+# sample code
 test and practise programs
