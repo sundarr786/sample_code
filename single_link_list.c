@@ -1,7 +1,7 @@
 /*
  * R Sundar
  */
-//#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -9,7 +9,7 @@
 
 typedef struct student_rec {
 	int id;
-	char name[MAX_NAME_SZ+1];
+	char name[MAX_NAME_SZ + 1];
 	struct student_rec *next;
 }st;
 
@@ -33,6 +33,53 @@ while (ptr->next->next!=NULL)	{
 	ptr = ptr->next;
 }
 */
+
+int swap_node(int swap_id1, int swap_id2)
+{
+	st *prev_x = NULL;
+	st *curr_x = NULL;
+	st *prev_y = NULL;
+	st *curr_y = NULL;
+	st *ptr = NULL;
+
+	curr_x = curr_y = rec;
+
+	while (curr_x != NULL) {
+		if (curr_x->id == swap_id1) 
+			break;
+
+		prev_x = curr_x;
+		curr_x = curr_x->next;
+	}
+	while (curr_y != NULL) {
+		if (curr_y->id == swap_id2) 
+			break;
+
+		prev_y = curr_y;
+		curr_y = curr_y->next;
+	}
+
+	if (!curr_x  || !curr_y) 
+		return -1;
+
+	if (prev_x) 
+		prev_x->next = curr_y;
+	else
+		rec = curr_y;
+
+
+	if (prev_y) 
+		prev_y->next = curr_x;
+	else
+		rec = curr_x;
+
+	ptr = curr_y->next;
+	curr_y->next = curr_x->next;
+	curr_x->next = ptr;
+
+	return 0;
+}
+
 
 void reverse_node()
 {
@@ -201,7 +248,7 @@ int main()
 	while	(1)	{
 
 		printf("enter your choice:\n1 : add in begining\n2 : add in end\n3 : search by id\n4 : count\n");
-		printf("5 : delete by id\n6 : print\n9 : print,clear and exit\n**********\n");
+		printf("5 : delete by id\n6 : print\n7: swap nodes\n8: reverse nodes\n9 : print,clear and exit\n**********\n");
 		scanf(" %d",&num);
 		if	(num == 1)
 			add_begin();
@@ -222,7 +269,12 @@ int main()
 		else if (num == 6)
 			print();
 		else if (num == 7)	{
-			//add in middle
+			int id1 = 0;
+			int id2 = 0;
+
+			printf("enter the numbers to be swapped");
+			scanf("%d %d", &id1, &id2);
+			swap_node(id1, id2);
 		}
 		else if (num == 8)	{
 			reverse_node();
