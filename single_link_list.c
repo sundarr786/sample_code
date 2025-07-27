@@ -1,5 +1,5 @@
 /*
- * R Sundar
+ * Author: R Sundar
  */
 #include <stdio.h>
 #include <stdlib.h>
